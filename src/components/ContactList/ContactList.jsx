@@ -1,5 +1,7 @@
 import { ContactListElement } from "components/ContactListElement/ContactListElement"
+import PropTypes from "prop-types"
 import css from "./ContactList.module.css"
+
 
 export const ContactList = ({ contacts, onClick }) => {
     return (
@@ -7,4 +9,13 @@ export const ContactList = ({ contacts, onClick }) => {
             <ContactListElement contacts={contacts} deleteItem={onClick} />
         </ul>
     )
+}
+
+ContactList.propTypes = {
+    contacts: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.string,
+        name: PropTypes.string,
+        number: PropTypes.string,
+    })),
+    onClick: PropTypes.func,
 }
