@@ -1,14 +1,14 @@
 import { Component } from "react";
 
 import { nanoid } from 'nanoid'
-import {Form} from "./Form/Form"
+import { ContactForm } from "./ContactForm/ContactForm"
+import { ContactList } from "./ContactList/ContactList";
+import { Filter } from "./Filter/Filter";
 
 export class App extends Component {
   state = {
     contacts: [],
-    filter: '',
-    name: '',
-    number: ''
+    filter: ''
   }
 
   onInputChange = (e) => {
@@ -19,15 +19,28 @@ export class App extends Component {
   }
 
   addContact = (name, number) => {
-
-    this.setState(({contacts}) => {
-      return {
-        contacts: [...contacts, {
-          id: nanoid(),
-          name: name,
-          number: number
-        }],
+    this.setState(({ contacts }) => {
+      if (contacts.find(contact => contact.name.toLowerCase() === name.toLowerCase())) {
+        alert(`${name} is already in contacts`)
+        return 
+      } else {
+          return {
+            contacts: [...contacts, {
+              id: nanoid(),
+              name: name,
+              number: number
+          }],
+        }
       }
+    })
+  }
+
+  deleteContact = (id) => {
+    this.setState(({contacts}) => {
+      const newCotnacts = contacts.filter(contact => contact.id !== id);
+      return ({
+        contacts: newCotnacts,
+      })
     })
   }
   
@@ -36,27 +49,18 @@ export class App extends Component {
     const visibleContacts = this.state.contacts.filter(contact => contact.name.toLowerCase().includes(this.state.filter.toLowerCase()));
 
     return (
-      <>
+      <div>
         <h1>Phonebook</h1>
 
-        <Form addContact={this.addContact} />
+        <ContactForm addContact={this.addContact} />
 
         <h2>Contacts</h2>
 
-        <label>
-          Find contacts by name
-          <input type="text" name="filter" value={this.state.filter} onChange={this.onInputChange} />
-        </label>
+        <Filter value={this.state.filter} onChange={this.onInputChange} />
 
-        <ul>
-          {visibleContacts.map(contact => {
-            return (
-              <li key={contact.id}>{contact.name}: {contact.number}</li>
-            )
-          })}
-        </ul>
+        <ContactList contacts={visibleContacts} onClick={this.deleteContact} />
 
-      </>
+      </div>
     )
   }
 

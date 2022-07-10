@@ -1,6 +1,6 @@
 import { Component } from "react";
 
-export class Form extends Component {
+export class ContactForm extends Component {
 
     state = {
         name: '',
@@ -20,8 +20,8 @@ export class Form extends Component {
         this.props.addContact(this.state.name, this.state.number);
 
         this.setState({
-            name: '',
-            number: ''
+          name: '',
+          number: ''
         })
     }
 
