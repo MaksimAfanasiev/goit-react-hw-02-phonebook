@@ -6,7 +6,11 @@ import css from "./ContactList.module.css"
 export const ContactList = ({ contacts, onClick }) => {
     return (
         <ul className={css.contactList}>
-            <ContactListElement contacts={contacts} deleteItem={onClick} />
+            {
+                contacts.map(contact => {
+                    return <ContactListElement key={contact.id} contact={contact} deleteItem={onClick}/>
+                })
+            }
         </ul>
     )
 }
