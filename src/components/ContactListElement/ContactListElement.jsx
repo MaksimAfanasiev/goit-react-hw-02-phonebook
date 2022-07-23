@@ -4,19 +4,17 @@ import css from "./ContactListElement.module.css"
 export const ContactListElement = ({ contact, deleteItem }) => {
      const { id, name, number } = contact;
     return (
-        <>
-            <li className={css.contactListItem}>{name}: {number}
-                <button className={css.deleteBtn} type="button" onClick={() => deleteItem(id)}>Delete</button>
-            </li>
-        </>
+        <li className={css.contactListItem}>{name}: {number}
+            <button className={css.deleteBtn} type="button" onClick={() => deleteItem(id)}>Delete</button>
+        </li>
     )
 }
 
 ContactListElement.propTypes = {
     contact: PropTypes.shape({
-        id: PropTypes.string,
-        name: PropTypes.string,
-        number: PropTypes.string,
+        id: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        number: PropTypes.string.isRequired,
     }),
-    deleteItem: PropTypes.func,
+    deleteItem: PropTypes.func.isRequired,
 }
